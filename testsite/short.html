@@ -24,11 +24,16 @@
         </div>
     </body>
     <script>
-        const params = new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop),
-        });
+        function findParam(name) {
+            var url = window.location.href;
+            var ind = url.indexOf(name);
+            var indOfEq = url.indexOf('=', ind);
+            var indOfAnd = url.indexOf('&', indOfEq);
+            if (indOfAnd < 0) { return url.substring(indOfEq+1) }
+            return url.substring(indOfEq+1, indOfAnd);
+        }
 
-        var consoleLogCount = params.consoleLogCount;
+        var consoleLogCount = findParam('consoleLogCount');
         for(var i = 0; i < consoleLogCount; i++) {
             console.log("Console Log " + i);
         }
@@ -69,7 +74,7 @@
             });
         }
 
-        var xhrCount = params.xhrCount;
+        var xhrCount = findParam('xhrCount')
         for(var i=0; i < xhrCount; i++ ) {
             printQuote(i);
         }

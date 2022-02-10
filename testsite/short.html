@@ -28,7 +28,7 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
 
-        let consoleLogCount = params.consoleLogCount;
+        var consoleLogCount = params.consoleLogCount;
         for(var i = 0; i < consoleLogCount; i++) {
             console.log("Console Log " + i);
         }
@@ -61,15 +61,15 @@
                 book = books[getRandomInt(0, books.length-1)]
                 q = book.quotes[getRandomInt(0, book.quotes.length-1)]
 
-                let qe = document.createElement("div");
+                var qe = document.createElement("div");
                 qe.innerHTML = '<div style="font-family: Arial;font-size: 2em;background-color: #d7cfd1;">'+ i + "." + q.quote+'</div><div style="font-family: Arial;font-size: 1em;background-color: #d7cfd1;">-'+q.who+","+book.book+"</div><hr>"
 
-                let randomQuotes = document.getElementById("randomQuotes");
+                var randomQuotes = document.getElementById("randomQuotes");
                 randomQuotes.appendChild(qe)
             });
         }
 
-        let xhrCount = params.xhrCount;
+        var xhrCount = params.xhrCount;
         for(var i=0; i < xhrCount; i++ ) {
             printQuote(i);
         }

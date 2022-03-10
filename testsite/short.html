@@ -61,7 +61,7 @@
             xhr.send();
         };
         function printQuote(i) {
-            getJSON('https://dinsaw.github.io/testsite/quotes.json',
+            getJSON('https://dinsaw.github.io/testsite/quotes.json'+'?i='+i,
             function(err, books) {
                 book = books[getRandomInt(0, books.length-1)]
                 q = book.quotes[getRandomInt(0, book.quotes.length-1)]

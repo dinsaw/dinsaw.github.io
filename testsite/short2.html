@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC">
+        <title>Short Test</title>
+    </head>
+    <body>
+        <h1>
+            Short Test. How to use?
+        </h1>
+        <p>
+        Get following url.
+        <pre>https://dinsaw.github.io/testsite/short.html?consoleLogCount={required_count}&xhrCount={required_count}></pre>
+        </br>
+        Example:
+        <ul>
+            <li><a href="https://dinsaw.github.io/testsite/short.html?consoleLogCount=3&xhrCount=3">https://dinsaw.github.io/testsite/short.html?consoleLogCount=3&xhrCount=3</a></li>
+        </ul>
+        </p>
+
+        <div id="randomQuotes">
+            <h3> Random Quotes </h3>
+
+        </div>
+    </body>
+    <script>
+        function findParam(name) {
+            var url = window.location.href;
+            var ind = url.indexOf(name);
+            var indOfEq = url.indexOf('=', ind);
+            var indOfAnd = url.indexOf('&', indOfEq);
+            if (indOfAnd < 0) { return url.substring(indOfEq+1) }
+            return url.substring(indOfEq+1, indOfAnd);
+        }
+
+        var consoleLogCount = findParam('consoleLogCount');
+        for(var i = 0; i < consoleLogCount; i++) {
+            console.log("Console Log " + i);
+        }
+
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        var getJSON = function(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+            var status = xhr.status;
+            if (status === 200) {
+                callback(null, xhr.response);
+            } else {
+                callback(status, xhr.response);
+            }
+            };
+            xhr.send();
+        };
+        function printQuote(i) {
+            getJSON('https://dinsaw.github.io/testsite/quotes.json'+'?i='+i,
+            function(err, books) {
+                book = books[getRandomInt(0, books.length-1)]
+                q = book.quotes[getRandomInt(0, book.quotes.length-1)]
+
+                var qe = document.createElement("div");
+                qe.innerHTML = '<div style="font-family: Arial;font-size: 2em;background-color: #d7cfd1;">'+ i + "." + q.quote+'</div><div style="font-family: Arial;font-size: 1em;background-color: #d7cfd1;">-'+q.who+","+book.book+"</div><hr>"
+
+                var randomQuotes = document.getElementById("randomQuotes");
+                randomQuotes.appendChild(qe)
+            });
+        }
+
+        var xhrCount = findParam('xhrCount')
+        for(var i=0; i < xhrCount; i++ ) {
+            printQuote(i);
+        }
+        alert("Hi. This is alert.")
+    </script>
+</html>

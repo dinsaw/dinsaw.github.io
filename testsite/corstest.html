@@ -14,6 +14,7 @@
 
         const req = new XMLHttpRequest();
         req.addEventListener("load", reqListener);
+        req.setRequestHeader("Authorization", "Basic aGV5Cg==");
         req.open("GET", "http://localhost:8088/example.json");
         req.send();
     </script>
